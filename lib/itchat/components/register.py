@@ -7,8 +7,11 @@ except ImportError:
 from ..log import set_logging
 from ..utils import test_connect
 from ..storage import templates
+from common.log import logger as logger2
 
 logger = logging.getLogger('itchat')
+logger.setLevel(logging.DEBUG)
+
 
 def load_register(core):
     core.auto_login       = auto_login
@@ -22,6 +25,8 @@ def auto_login(self, hotReload=False, statusStorageDir='itchat.pkl',
     if not test_connect():
         logger.info("You can't get access to internet or wechat domain, so exit.")
         sys.exit()
+    logger2.debug("auto_login start")
+    logger2.debug(hotReload)
     self.useHotReload = hotReload
     self.hotReloadDir = statusStorageDir
     if hotReload:
@@ -37,6 +42,7 @@ def auto_login(self, hotReload=False, statusStorageDir='itchat.pkl',
     else:
         self.login(enableCmdQR=enableCmdQR, picDir=picDir, qrCallback=qrCallback,
             loginCallback=loginCallback, exitCallback=exitCallback)
+    logger2.debug("auto_login end")
 
 def configured_reply(self):
     ''' determine the type of message and reply if its method is defined
@@ -50,6 +56,7 @@ def configured_reply(self):
     except Queue.Empty:
         pass
     else:
+        logger2.debug(msg)
         if isinstance(msg['User'], templates.User):
             replyFn = self.functionDict['FriendChat'].get(msg['Type'])
         elif isinstance(msg['User'], templates.MassivePlatform):

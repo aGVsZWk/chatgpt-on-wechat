@@ -23,10 +23,12 @@ from common.time_check import time_checker
 from config import conf, get_appdata_dir
 from lib import itchat
 from lib.itchat.content import *
+from y3i3 import y3i3
 
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE, ATTACHMENT, SHARING])
 def handler_single_msg(msg):
+    logger.debug(msg)
     try:
         cmsg = WechatMessage(msg, False)
     except NotImplementedError as e:
@@ -38,6 +40,7 @@ def handler_single_msg(msg):
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE, ATTACHMENT, SHARING], isGroupChat=True)
 def handler_group_msg(msg):
+    logger.debug(msg)
     try:
         cmsg = WechatMessage(msg, True)
     except NotImplementedError as e:
@@ -110,6 +113,9 @@ class WechatChannel(ChatChannel):
         super().__init__()
         self.receivedMsgs = ExpiredDict(60 * 60)
 
+    def exit_callback(self):
+        logger.info("微信程序已退出")
+
     def startup(self):
         itchat.instance.receivingRetryCount = 600  # 修改断线超时时间
         # login by scan QRCode
@@ -120,12 +126,14 @@ class WechatChannel(ChatChannel):
             hotReload=hotReload,
             statusStorageDir=status_path,
             qrCallback=qrCallback,
+            loginCallback=y3i3.init_scheduler,
+            exitCallback=self.exit_callback
         )
         self.user_id = itchat.instance.storageClass.userName
         self.name = itchat.instance.storageClass.nickName
         logger.info("Wechat login success, user_id: {}, nickname: {}".format(self.user_id, self.name))
         # start message listener
-        itchat.run()
+        itchat.run(debug=True)
 
     # handle_* 系列函数处理收到的消息后构造Context，然后传入produce函数中处理Context和发送回复
     # Context包含了消息的所有信息，包括以下属性

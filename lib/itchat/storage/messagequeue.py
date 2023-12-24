@@ -5,11 +5,14 @@ except ImportError:
     import queue
 
 from .templates import AttributeDict
+from common.log import logger as logger2
 
 logger = logging.getLogger('itchat')
 
+
 class Queue(queue.Queue):
     def put(self, message):
+        logger2.debug(message)
         queue.Queue.put(self, Message(message))
 
 class Message(AttributeDict):

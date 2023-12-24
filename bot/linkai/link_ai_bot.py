@@ -101,6 +101,7 @@ class LinkAIBot(Bot):
 
             # do http request
             base_url = conf().get("linkai_api_base", "https://api.link-ai.chat")
+            return Reply(ReplyType.TEXT, "提问太快啦，请休息一下再问我吧")
             res = requests.post(url=base_url + "/v1/chat/completions", json=body, headers=headers,
                                 timeout=conf().get("request_timeout", 180))
             if res.status_code == 200:
@@ -299,6 +300,8 @@ class LinkAIBot(Bot):
                 "img_proxy": conf().get("image_proxy")
             }
             url = conf().get("linkai_api_base", "https://api.link-ai.chat") + "/v1/images/generations"
+            logger.debug(data)
+            return False, "画图出现问题，请休息一下再问我吧"
             res = requests.post(url, headers=headers, json=data, timeout=(5, 90))
             t2 = time.time()
             image_url = res.json()["data"][0]["url"]

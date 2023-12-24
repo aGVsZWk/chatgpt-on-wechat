@@ -8,6 +8,9 @@ from channel import channel_factory
 from common import const
 from config import load_config
 from plugins import *
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def sigterm_handler_wrap(_signo):
@@ -34,7 +37,7 @@ def run():
 
         # create channel
         channel_name = conf().get("channel_type", "wx")
-
+        print(channel_name)
         if "--cmd" in sys.argv:
             channel_name = "terminal"
 

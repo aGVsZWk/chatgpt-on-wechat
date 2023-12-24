@@ -11,7 +11,7 @@ from channel.channel import Channel
 from common.dequeue import Dequeue
 from common import memory
 from plugins import *
-
+from y3i3 import y3i3
 try:
     from voice.audio_convert import any_to_wav
 except Exception as e:
@@ -223,6 +223,9 @@ class ChatChannel(Channel):
                 pass
             elif context.type == ContextType.FUNCTION or context.type == ContextType.FILE:  # 文件消息及函数调用等，当前无默认逻辑
                 pass
+            elif context.type == ContextType.PATPAT:
+                context["channel"] = e_context["channel"]
+                reply = y3i3.get_patpat_reply()
             else:
                 logger.warning("[WX] unknown context type: {}".format(context.type))
                 return

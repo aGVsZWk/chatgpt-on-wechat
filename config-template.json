@@ -1,30 +1,38 @@
 {
   "channel_type": "wx",
   "model": "",
-  "open_ai_api_key": "YOUR API KEY",
-  "text_to_image": "dall-e-2",
+  "open_ai_api_key": "",
+  "text_to_image": "midjourney",
   "voice_to_text": "openai",
   "text_to_voice": "openai",
   "proxy": "",
-  "hot_reload": false,
+  "hot_reload": true,
   "single_chat_prefix": [
     "bot",
-    "@bot"
+    "@bot",
+    "@你愿意做我的小可爱嘛",
+    "亲,",
+    "亲，",
+    "亲",
+    "小可爱",
+    "你愿意做我的小可爱嘛",
+    "你愿意做我的小可爱嘛 "
   ],
-  "single_chat_reply_prefix": "[bot] ",
+  "single_chat_reply_prefix": "[小可爱] ",
   "group_chat_prefix": [
-    "@bot"
+    "@你愿意做我的小可爱嘛",
+    "@你愿意做我的小可爱嘛 "
   ],
   "group_name_white_list": [
-    "ChatGPT测试群",
-    "ChatGPT测试群2"
+    "小可爱sweet"
   ],
   "group_chat_in_one_session": [
-    "ChatGPT测试群"
+    "小可爱sweet"
   ],
   "image_create_prefix": [
     "画"
   ],
+  "image_proxy": true,
   "speech_recognition": true,
   "group_speech_recognition": false,
   "voice_reply_voice": false,
@@ -34,7 +42,7 @@
   "temperature": 0.7,
   "top_p": 1,
   "subscribe_msg": "感谢您的关注！\n这里是ChatGPT，可以自由对话。\n支持语音对话。\n支持图片输入。\n支持图片输出，画字开头的消息将按要求创作图片。\n支持tool、角色扮演和文字冒险等丰富的插件。\n输入{trigger_prefix}#help 查看详细指令。",
-  "use_linkai": false,
-  "linkai_api_key": "",
+  "use_linkai": true,
+  "linkai_api_key": "Link_JYyQcUgkrwB9QAhTlMoKwOUV9HXPeShltG54D8JSeP",
   "linkai_app_code": ""
 }

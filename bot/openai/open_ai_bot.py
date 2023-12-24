@@ -3,7 +3,6 @@
 import time
 
 import openai
-import openai.error
 
 from bot.bot import Bot
 from bot.openai.open_ai_image import OpenAIImage

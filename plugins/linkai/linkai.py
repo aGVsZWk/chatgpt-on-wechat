@@ -248,8 +248,8 @@ class LinkAI(Plugin):
             if os.path.exists(plugin_config_path):
                 with open(plugin_config_path, "r", encoding="utf-8") as f:
                     plugin_conf = json.load(f)
-                    plugin_conf["midjourney"]["enabled"] = False
-                    plugin_conf["summary"]["enabled"] = False
+                    # plugin_conf["midjourney"]["enabled"] = False
+                    # plugin_conf["summary"]["enabled"] = False
                     return plugin_conf
         except Exception as e:
             logger.exception(e)
