@@ -59,7 +59,7 @@ class Storage(object):
                 chatroom['Self'].core = chatroom.core
                 chatroom['Self'].chatroom = chatroom
         self.lastInputUserName = j.get('lastInputUserName', None)
-    def search_friends(self, name=None, userName=None, remarkName=None, nickName=None,
+    def search_friends(self, name=None, userName=None, remarkName=None, c=None,
             wechatAccount=None):
         with self.updateLock:
             if (name or userName or remarkName or nickName or wechatAccount) is None:

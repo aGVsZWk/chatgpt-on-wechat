@@ -12,9 +12,9 @@ QR.png
 nohup.out
 tmp
 plugins.json
-itchat.pkl
+itchat_y3i3.pkl
 *.log
-user_datas.pkl
+user_y3i3_datas.pkl
 chatgpt_tool_hub/
 plugins/**/
 !plugins/bdunit

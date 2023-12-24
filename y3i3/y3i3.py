@@ -13,6 +13,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import requests
 from bridge.reply import Reply, ReplyType
 from channel.wechat.wechat_message import *
+from y3i3 import y3i3_helper
 
 
 host = "192.168.1.101"
@@ -45,13 +46,17 @@ def get_caihongpi_info():
         return "彩虹屁获取失败"
 
 
-def get_hitokoto_info():
+def get_hitokoto_info(c=None):
     """
     从『一言』获取信息。(官网：https://hitokoto.cn/)
     :return: str,一言。
     """
     try:
-        resp = requests.get('https://v1.hitokoto.cn?c=k', params={'encode': 'text'})
+        if c:
+            url = "https://v1.hitokoto.cn?c=%s" % c
+        else:
+            url = "https://v1.hitokoto.cn"
+        resp = requests.get(url, params={'encode': 'text'})
         if resp.status_code == 200:
             return resp.text
         return "一言获取失败"
@@ -269,13 +274,13 @@ def get_constellation_info(birthday_str, is_tomorrow=False):
 
 
 def get_sweet_words():
-    return "                    ----来自最爱你的我"
+    return "                  ----来自最爱你的磊磊"
 
 
 def get_patpat_reply():
     """获取微信拍一拍的回复信息"""
 
-    reply = Reply(ReplyType.TEXT, get_hitokoto_info())
+    reply = Reply(ReplyType.TEXT, get_hitokoto_info(c=random.choice(["a", "b", "c", "d", "e", "f", "g", "h", "j", "k"])))
     return reply
 
 
@@ -285,7 +290,8 @@ def send_morning_msg():
     """
     f = random.choice([get_caihongpi_info, get_hitokoto_info, get_yiyan_word])
     text = get_weather() + "\n\n" + f() + "\n" + get_sweet_words()
-    itchat.send(text, toUserName="@cd2979c40a36942f6c04920598613dc5dd8fd7c333c472cc33744dd8f918481d")
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    itchat.send(text, toUserName=user.UserName)
 
 
 def send_constellation_today():
@@ -293,7 +299,8 @@ def send_constellation_today():
     发送今日星座信息
     """
     text = get_constellation_info("白羊座")
-    itchat.send(text, toUserName="@cd2979c40a36942f6c04920598613dc5dd8fd7c333c472cc33744dd8f918481d")
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    itchat.send(text, toUserName=user.UserName)
 
 
 def send_constellation_tomorrow():
@@ -301,7 +308,26 @@ def send_constellation_tomorrow():
     发送明日星座信息
     """
     text = get_constellation_info("白羊座", True)
-    itchat.send(text, toUserName="@cd2979c40a36942f6c04920598613dc5dd8fd7c333c472cc33744dd8f918481d")
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    itchat.send(text, toUserName=user.UserName)
+
+
+def send_excuse_msg():
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    t = int(random.random() * 100)
+    if t < 20:
+        text = "臭茹茹，你今天拉屎了没"
+    elif 20 <= t < 40:
+        text = "臭茹茹，你今天穿秋裤了没"
+    elif 40 <= t < 60:
+        text = get_hitokoto_info(c=random.choice(["a", "b", "c", "d", "e", "f", "g", "h", "j", "k"]))
+    elif 60 <= t < 80:
+        text = get_hitokoto_info(c="k")
+    elif 80 <= t:
+        text = get_hitokoto_info(c="j")
+    else:
+        text = ""
+    itchat.send(text, toUserName=user.UserName)
 
 
 def init_scheduler():
@@ -311,10 +337,19 @@ def init_scheduler():
                       jitter=300)
     scheduler.add_job(send_constellation_today, "cron", [], hour=7, misfire_grace_time=600, jitter=300)
     scheduler.add_job(send_constellation_tomorrow, "cron", [], hour=19, misfire_grace_time=600, jitter=300)
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=8, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=10, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=14, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=16, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=17, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
     scheduler.start()
-
-
-
 
 
 if __name__ == '__main__':
