@@ -44,7 +44,7 @@ def get_friend(wechat_name=None, remark_name=None, update=False):
         itchat.get_friends(update=True)
     if not wechat_name and not remark_name:
         return None
-    friends = itchat.search_friends(name=wechat_name, remark_name=remark_name)
+    friends = itchat.search_friends(name=wechat_name, remarkName=remark_name)
     if not friends:
         return None
     return friends[0]

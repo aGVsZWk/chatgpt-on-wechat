@@ -290,7 +290,7 @@ def send_morning_msg():
     """
     f = random.choice([get_caihongpi_info, get_hitokoto_info, get_yiyan_word])
     text = get_weather() + "\n\n" + f() + "\n" + get_sweet_words()
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
 
@@ -299,7 +299,7 @@ def send_constellation_today():
     发送今日星座信息
     """
     text = get_constellation_info("白羊座")
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
 
@@ -308,12 +308,12 @@ def send_constellation_tomorrow():
     发送明日星座信息
     """
     text = get_constellation_info("白羊座", True)
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
 
 def send_excuse_msg():
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")[0]
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")
     t = int(random.random() * 100)
     if t < 20:
         text = "臭茹茹，你今天拉屎了没"
@@ -328,6 +328,10 @@ def send_excuse_msg():
     else:
         text = ""
     itchat.send(text, toUserName=user.UserName)
+
+def send_eat_msg():
+    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    itchat.send("臭茹茹，你晚饭吃的啥?", toUserName=user.UserName)
 
 
 def init_scheduler():
@@ -349,6 +353,8 @@ def init_scheduler():
                       jitter=random.randint(100, 900))
     scheduler.add_job(send_excuse_msg, "cron", [], hour=17, minute=random.randint(0, 59), misfire_grace_time=600,
                       jitter=random.randint(100, 900))
+    scheduler.add_job(send_eat_msg, "cron", [], hour=21, minute=24, misfire_grace_time=600,
+                      jitter=random.randint(10, 30))
     scheduler.start()
 
 

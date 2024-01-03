@@ -26,10 +26,16 @@
     "@你愿意做我的小可爱嘛\\u2005"
   ],
   "group_name_white_list": [
-    "小可爱sweet"
+    "小可爱sweet",
+    "七剑下天山",
+    "买房吗？",
+    "买房吗?",
+    "中国好邻居",
+    "*"
   ],
   "group_chat_in_one_session": [
-    "小可爱sweet"
+    "小可爱sweet",
+    "七剑下天山"
   ],
   "image_create_prefix": [
     "画"
