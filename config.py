@@ -74,7 +74,7 @@ available_setting = {
     "qwen_app_id": "",
     "qwen_node_id": "",  # 流程编排模型用到的id，如果没有用到qwen_node_id，请务必保持为空字符串
     # Google Gemini Api Key
-    "gemini_api_key": "",
+    "gemini_api_key": "AIzaSyBw5cdCUMy7BG9mtJiXT7vSXGsXeIky9dc",
     # wework的通用配置
     "wework_smart": True,  # 配置wework是否使用已登录的企业微信，False为多开
     # 语音设置
