@@ -23,6 +23,7 @@ plugins/**/
 !plugins/godcmd
 !plugins/tool
 !plugins/banwords
+!plugins/weather
 !plugins/banwords/**/
 plugins/banwords/__pycache__
 plugins/banwords/lib/__pycache__

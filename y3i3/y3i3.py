@@ -16,15 +16,15 @@ from channel.wechat.wechat_message import *
 from y3i3 import y3i3_helper
 
 
-host = "192.168.0.103"
-port = 6379
-db = 0
-password = "1234"
-
-connection = redis.Redis(host=host, port=port, db=db, password=password)
-
-result = connection.keys()
-print(result)
+# host = "192.168.0.103"
+# port = 6379
+# db = 0
+# password = "1234"
+#
+# connection = redis.Redis(host=host, port=port, db=db, password=password)
+#
+# result = connection.keys()
+# print(result)
 
 # from channel.wechat.wechat_channel import WechatChannel
 
@@ -128,7 +128,8 @@ def get_air_quality(city):
 def get_weather(city_name="北京", name="臭茹茹"):
     city_code_config = {
         "北京": "101010200",
-        "石家庄": "101090101"
+        "石家庄": "101090101",
+        "运城": "101100801"
     }
     city_code = city_code_config[city_name]
     url = "http://t.weather.sojson.com/api/weather/city/" + city_code
@@ -293,7 +294,7 @@ def send_morning_msg():
     user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
-    text = get_weather("石家庄市")
+    text = get_weather("石家庄", "小伙砸")
     user = y3i3_helper.get_friend(remark_name="绿城凤鸣朝阳 朱爱裕")
     itchat.send(text, toUserName=user.UserName)
 
@@ -366,14 +367,16 @@ def init_scheduler():
 
 if __name__ == '__main__':
     # "6点半"
-    print(get_weather("北京"))
-    print()
-    print(get_yiyan_word())
-    print(get_sweet_words())
-
-    # "7点"
-    print(get_constellation_info("白羊座"))
+    # print(get_weather("北京"))
+    # print(get_weather("石家庄", "小伙砸"))
+    print(get_weather("运城", "小伙砸"))
+    # print()
+    # print(get_yiyan_word())
+    # print(get_sweet_words())
+    #
+    # # "7点"
+    # print(get_constellation_info("白羊座"))
 
     # 18点
-    print(get_constellation_info("白羊座", True))
-    init_scheduler()
+    # print(get_constellation_info("白羊座", True))
+    # init_scheduler()
