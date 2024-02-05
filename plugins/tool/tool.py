@@ -166,13 +166,16 @@ class Tool(Plugin):
         return valid_list
 
     def _reset_app(self) -> App:
+        logger.info("tool reset app")
         tool_config = self._read_json()
         app_kwargs = self._build_tool_kwargs(tool_config.get("kwargs", {}))
-
+        logger.info(app_kwargs)
         app = AppFactory()
         app.init_env(**app_kwargs)
+        logger.info("tool init app args succ")
 
         # filter not support tool
         tool_list = self._filter_tool_list(tool_config.get("tools", []))
+        logger.info(tool_list)
 
         return app.create_app(tools_list=tool_list, **app_kwargs)

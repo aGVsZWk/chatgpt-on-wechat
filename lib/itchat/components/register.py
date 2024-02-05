@@ -56,7 +56,6 @@ def configured_reply(self):
     except Queue.Empty:
         pass
     else:
-        logger2.debug(msg)
         if isinstance(msg['User'], templates.User):
             replyFn = self.functionDict['FriendChat'].get(msg['Type'])
         elif isinstance(msg['User'], templates.MassivePlatform):

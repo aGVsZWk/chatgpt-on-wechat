@@ -31,11 +31,12 @@
     "买房吗？",
     "买房吗?",
     "中国好邻居",
+    "兵营",
+    "空指部",
     "*"
   ],
   "group_chat_in_one_session": [
-    "小可爱sweet",
-    "七剑下天山"
+    "ALL_GROUP"
   ],
   "image_create_prefix": [
     "画"
@@ -51,6 +52,6 @@
   "top_p": 1,
   "subscribe_msg": "感谢您的关注！\n这里是ChatGPT，可以自由对话。\n支持语音对话。\n支持图片输入。\n支持图片输出，画字开头的消息将按要求创作图片。\n支持tool、角色扮演和文字冒险等丰富的插件。\n输入{trigger_prefix}#help 查看详细指令。",
   "use_linkai": true,
-  "linkai_api_key": "Link_JYyQcUgkrwB9QAhTlMoKwOUV9HXPeShltG54D8JSeP",
+  "linkai_api_key": "Link_8072AsbmmCxcdnxFbxYXyNBARn031yl269qOaUdacg",
   "linkai_app_code": ""
 }

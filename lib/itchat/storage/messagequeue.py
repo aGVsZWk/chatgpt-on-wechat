@@ -12,8 +12,10 @@ logger = logging.getLogger('itchat')
 
 class Queue(queue.Queue):
     def put(self, message):
-        logger2.debug(message)
+        logger2.debug("FromUserName:%s, ToUserName:%s, Content:%s", message.get("FromUserName"),
+                      message.get("ToUserName"), message.get("Content"))
         queue.Queue.put(self, Message(message))
+
 
 class Message(AttributeDict):
     def download(self, fileName):

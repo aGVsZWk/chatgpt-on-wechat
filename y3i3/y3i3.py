@@ -16,7 +16,7 @@ from channel.wechat.wechat_message import *
 from y3i3 import y3i3_helper
 
 
-host = "192.168.1.101"
+host = "192.168.0.103"
 port = 6379
 db = 0
 password = "1234"
@@ -293,6 +293,9 @@ def send_morning_msg():
     user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
+    text = get_weather("石家庄市")
+    user = y3i3_helper.get_friend(remark_name="绿城凤鸣朝阳 朱爱裕")
+    itchat.send(text, toUserName=user.UserName)
 
 def send_constellation_today():
     """
@@ -302,6 +305,9 @@ def send_constellation_today():
     user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 
+    text = get_constellation_info("双鱼座")
+    user = y3i3_helper.get_friend(remark_name="绿城凤鸣朝阳 朱爱裕")
+    itchat.send(text, toUserName=user.UserName)
 
 def send_constellation_tomorrow():
     """
@@ -337,9 +343,9 @@ def send_eat_msg():
 def init_scheduler():
     # 定时任务
     scheduler = BackgroundScheduler()
-    scheduler.add_job(send_morning_msg, "cron", [], hour=6, minute=30, misfire_grace_time=600,
+    scheduler.add_job(send_morning_msg, "cron", [], hour=7, minute=30, misfire_grace_time=600,
                       jitter=300)
-    scheduler.add_job(send_constellation_today, "cron", [], hour=7, misfire_grace_time=600, jitter=300)
+    scheduler.add_job(send_constellation_today, "cron", [], hour=8, misfire_grace_time=600, jitter=300)
     scheduler.add_job(send_constellation_tomorrow, "cron", [], hour=19, misfire_grace_time=600, jitter=300)
     scheduler.add_job(send_excuse_msg, "cron", [], hour=8, minute=random.randint(0, 59), misfire_grace_time=600,
                       jitter=random.randint(100, 900))
