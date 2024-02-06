@@ -40,7 +40,7 @@ class Weather(Plugin):
     def find_city_code(self, seg_list):
         for seg in seg_list:
             for item in self.city_data:
-                if seg in item["city_name"] or item["city_name"] in seg:
+                if seg.strip() in item["city_name"] or item["city_name"] in seg:
                     return item["city_code"]
         return "101090101"
 

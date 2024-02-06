@@ -81,8 +81,6 @@ def get_yiyan_word():
     every_msg = soup_texts.find_all('div', class_='pbllists')[0].find_all('p')[num].text
     return every_msg
 
-
-
 def get_air_quality(city):
     """
     通过城市名获取空气质量
@@ -348,20 +346,20 @@ def init_scheduler():
                       jitter=300)
     scheduler.add_job(send_constellation_today, "cron", [], hour=8, misfire_grace_time=600, jitter=300)
     scheduler.add_job(send_constellation_tomorrow, "cron", [], hour=19, misfire_grace_time=600, jitter=300)
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=8, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=10, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=14, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=16, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_excuse_msg, "cron", [], hour=17, minute=random.randint(0, 59), misfire_grace_time=600,
-                      jitter=random.randint(100, 900))
-    scheduler.add_job(send_eat_msg, "cron", [], hour=21, minute=24, misfire_grace_time=600,
-                      jitter=random.randint(10, 30))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=8, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=10, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=14, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=16, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_excuse_msg, "cron", [], hour=17, minute=random.randint(0, 59), misfire_grace_time=600,
+    #                   jitter=random.randint(100, 900))
+    # scheduler.add_job(send_eat_msg, "cron", [], hour=21, minute=24, misfire_grace_time=600,
+    #                   jitter=random.randint(10, 30))
     scheduler.start()
 
 

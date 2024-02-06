@@ -3,8 +3,8 @@
   "model": "",
   "open_ai_api_key": "",
   "text_to_image": "midjourney",
-  "voice_to_text": "openai",
-  "text_to_voice": "openai",
+  "voice_to_text": "linkai",
+  "text_to_voice": "linkai",
   "proxy": "",
   "hot_reload": true,
   "single_chat_prefix": [
@@ -33,7 +33,7 @@
     "中国好邻居",
     "兵营",
     "空指部",
-    "*"
+    "ALL_GROUP"
   ],
   "group_chat_in_one_session": [
     "ALL_GROUP"

@@ -24,6 +24,7 @@ plugins/**/
 !plugins/tool
 !plugins/banwords
 !plugins/weather
+!plugins/xzw
 !plugins/banwords/**/
 plugins/banwords/__pycache__
 plugins/banwords/lib/__pycache__
