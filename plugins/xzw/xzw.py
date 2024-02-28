@@ -19,7 +19,6 @@ import re
 @plugins.register(
     name="Xzw",
     desire_priority=900,
-    hidden=True,
     desc="星座插件",
     version="0.1",
     author="luke",
@@ -118,10 +117,9 @@ class XZW(Plugin):
     def on_handle_context(self, e_context: EventContext):
         if e_context["context"].type != ContextType.TEXT:
             return
-
         content = e_context["context"].content.strip()
-        logger.debug("[weather] on_handle_context. content: %s" % content)
-        if [key in content for key in self.constellation_dict.keys()] or "星座" in content:
+        logger.debug("[xzw] on_handle_context. content: %s" % content)
+        if any([key in content for key in self.constellation_dict.keys()]) or "星座" in content:
             logger.info(f"[xzw] 匹配到星座【{content}】")
             seg_list = list(jieba.cut(content, use_paddle=True))  # 使用paddle模式
             is_tomorrow = self.check_is_tomorrow(seg_list)

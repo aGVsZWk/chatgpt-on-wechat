@@ -288,7 +288,7 @@ def send_morning_msg():
     发送天气信息
     """
     f = random.choice([get_caihongpi_info, get_hitokoto_info, get_yiyan_word])
-    text = get_weather() + "\n\n" + f() + "\n" + get_sweet_words()
+    text = get_weather("北京") + "\n\n" + f() + "\n" + get_sweet_words()
     user = y3i3_helper.get_friend(remark_name="臭茹茹")
     itchat.send(text, toUserName=user.UserName)
 

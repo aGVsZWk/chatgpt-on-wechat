@@ -19,7 +19,6 @@ from plugins import *
 @plugins.register(
     name="Weather",
     desire_priority=900,
-    hidden=True,
     desc="天气插件",
     version="0.1",
     author="luke",
