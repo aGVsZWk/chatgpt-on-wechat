@@ -140,7 +140,7 @@ def get_weather(city_name="北京", name="臭茹茹"):
     #位置
     location = weather['cityInfo']['parent']+weather['cityInfo']['city']
     #当前时间
-    today_time = datetime.now().strftime('%Y{y}%m{m}%d{d}').format(y='年',m='月',d='日')
+    today_time = datetime.now().strftime('%Y{y}%m{m}%d{d}').format(y='年', m='月', d='日')
     # 今日天气
     today_weather = weather.get('data').get('forecast')[0]
     # print(today_weather)
@@ -296,6 +296,7 @@ def send_morning_msg():
     user = y3i3_helper.get_friend(remark_name="绿城凤鸣朝阳 朱爱裕")
     itchat.send(text, toUserName=user.UserName)
 
+
 def send_constellation_today():
     """
     发送今日星座信息
@@ -307,6 +308,7 @@ def send_constellation_today():
     text = get_constellation_info("双鱼座")
     user = y3i3_helper.get_friend(remark_name="绿城凤鸣朝阳 朱爱裕")
     itchat.send(text, toUserName=user.UserName)
+
 
 def send_constellation_tomorrow():
     """

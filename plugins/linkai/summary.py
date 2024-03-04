@@ -76,7 +76,9 @@ class LinkSummary:
         if suffix not in support_list:
             logger.warn(f"[LinkSum] unsupported file, suffix={suffix}, support_list={support_list}")
             return False
-
+        if "资料" in file_path:
+            logger.warn("相亲资料不总结")
+            return False
         return True
 
     def check_url(self, url: str):
