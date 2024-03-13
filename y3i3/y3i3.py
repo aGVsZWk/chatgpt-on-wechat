@@ -6,9 +6,7 @@
 import random
 import traceback
 from datetime import datetime
-import redis
 from bs4 import BeautifulSoup
-import time
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
 from bridge.reply import Reply, ReplyType

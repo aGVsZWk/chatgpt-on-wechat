@@ -2,13 +2,15 @@
 
 import json
 import os
+import random
+
 import requests
 import plugins
 from bridge.context import ContextType
 from bridge.reply import Reply, ReplyType
 from common.log import logger
 from plugins import *
-
+import textwrap
 
 @plugins.register(
     name="Keyword",
@@ -90,7 +92,42 @@ class Keyword(Plugin):
             
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
-            
+        if "介绍对象" in content:
+            curdir = os.path.dirname(__file__)
+            config_path = os.path.join(curdir, "kl_crawl.data")
+            lines = open(config_path).readlines()
+            no = random.randint(0, len(lines)-1)
+            item = json.loads(lines[no])
+            item["no"] = no
+            if item["sign"] == "请设定":
+                item["sign"] = "未知"
+            item["bitrh_year"] = item["birth_data"].split(".")[0]
+            item["id_reg_addr"] = "未知" if item["id_reg_addr"] == "身份证尚未到店核验" else item["id_reg_addr"]
+            item["sign"] = "未知" if item["sign"] == "请设定" else item["sign"]
+            item["in_come"] = "未知" if item["in_come"] == "请设定" else item["in_come"]
+            item["car"] = "保密" if item["car"] == "请设定" else item["car"]
+            item["house_hold"] = "保密" if item["house_hold"] == "请设定" else item["house_hold"] + "有房"
+            reply_text = """
+                【编号】{no}
+                【昵称】{user_name}
+                【性别】{sex}
+                【出生年份】{bitrh_year}
+                【户籍】{id_reg_addr}
+                【星座】{sign}
+                【身高】{height}
+                【学历】{edu}
+                【职业】{vocation}
+                【是否有房】{house_hold}
+                【是否有车】{car}
+                【收入】{in_come}
+                【自我介绍】{about_me}
+            """.format(**item)
+            reply = Reply()
+            reply.type = ReplyType.TEXT
+            reply.content = textwrap.dedent(reply_text)
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+
     def get_help_text(self, **kwargs):
         help_text = "关键词过滤"
         return help_text

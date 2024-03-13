@@ -3,6 +3,7 @@
 .vscode
 .venv
 .vs
+kl_crawl.data
 .wechaty/
 __pycache__/
 venv*
