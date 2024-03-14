@@ -127,6 +127,34 @@ class Keyword(Plugin):
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
+        if "查看照片" in content:
+            curdir = os.path.dirname(__file__)
+            data_path = os.path.join(curdir, "kl_crawl.data")
+            no = content.split(" ")[-1]
+            if no.isdigit():
+                try:
+                    no = int(no)
+                    lines = open(data_path).readlines()
+                    file_name = json.loads(lines[no])["header_pic"].split("/")[-1]
+                    picc_path = os.path.join(curdir, "picc", file_name)
+                    reply = Reply()
+                    reply.type = ReplyType.IMAGE
+                    reply.content = open(picc_path, "rb")
+                except Exception as e:
+                    logger.debug(e)
+                    reply = Reply()
+                    reply.type = ReplyType.TEXT
+                    reply.content = "编号不正确"
+            else:
+                reply = Reply()
+                reply.type = ReplyType.TEXT
+                reply.content = "编号不正确"
+
+
+        e_context["reply"] = reply
+        e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+
+
     def get_help_text(self, **kwargs):
         help_text = "关键词过滤"
         return help_text
