@@ -107,20 +107,19 @@ class Keyword(Plugin):
             item["in_come"] = "未知" if item["in_come"] == "请设定" else item["in_come"]
             item["car"] = "保密" if item["car"] == "请设定" else item["car"]
             item["house_hold"] = "保密" if item["house_hold"] == "请设定" else item["house_hold"] + "有房"
-            reply_text = """
-                【编号】{no}
-                【昵称】{user_name}
-                【性别】{sex}
-                【出生年份】{bitrh_year}
-                【户籍】{id_reg_addr}
-                【星座】{sign}
-                【身高】{height}
-                【学历】{edu}
-                【职业】{vocation}
-                【是否有房】{house_hold}
-                【是否有车】{car}
-                【收入】{in_come}
-                【自我介绍】{about_me}
+            reply_text = """【编号】{no}
+【昵称】{user_name}
+【性别】{sex}
+【出生年份】{bitrh_year}
+【户籍】{id_reg_addr}
+【星座】{sign}
+【身高】{height}
+【学历】{edu}
+【职业】{vocation}
+【是否有房】{house_hold}
+【是否有车】{car}
+【收入】{in_come}
+【自我介绍】{about_me}
             """.format(**item)
             reply = Reply()
             reply.type = ReplyType.TEXT
