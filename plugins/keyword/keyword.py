@@ -94,7 +94,11 @@ class Keyword(Plugin):
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
         if "介绍对象" in content:
             curdir = os.path.dirname(__file__)
-            config_path = os.path.join(curdir, "kl_crawl.data")
+            if "石家庄" in content:
+                f = "kl_sjz_crawl.data"
+            else:
+                f = "kl_crawl.data"
+            config_path = os.path.join(curdir, f)
             lines = open(config_path).readlines()
             no = random.randint(0, len(lines)-1)
             item = json.loads(lines[no])
@@ -129,7 +133,11 @@ class Keyword(Plugin):
 
         if "查看照片" in content:
             curdir = os.path.dirname(__file__)
-            data_path = os.path.join(curdir, "kl_crawl.data")
+            if "石家庄" in content:
+                f = "kl_sjz_crawl.data"
+            else:
+                f = "kl_crawl.data"
+            data_path = os.path.join(curdir, f)
             no = content.split(" ")[-1]
             if no.isdigit():
                 try:
@@ -150,9 +158,8 @@ class Keyword(Plugin):
                 reply.type = ReplyType.TEXT
                 reply.content = "编号不正确"
 
-
-        e_context["reply"] = reply
-        e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
 
     def get_help_text(self, **kwargs):

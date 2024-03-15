@@ -37,6 +37,7 @@ class Weather(Plugin):
             raise e
 
     def find_city_code(self, seg_list):
+        logger.info(seg_list)
         for seg in seg_list:
             for item in self.city_data:
                 if seg.strip() in item["city_name"] or item["city_name"] in seg:
@@ -51,7 +52,7 @@ class Weather(Plugin):
             return 2
         elif "三天" in t or "3天" in t:
             return 3
-        elif "一星期" in "".join(t) or "七天" in t or "7天" in t:
+        elif "一周" in "".join(t) or "一星期" in "".join(t) or "七天" in t or "7天" in t:
             return 7
         else:
             return 1
