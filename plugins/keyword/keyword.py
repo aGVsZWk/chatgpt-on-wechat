@@ -3,7 +3,7 @@
 import json
 import os
 import random
-
+import linecache
 import requests
 import plugins
 from bridge.context import ContextType
@@ -160,6 +160,19 @@ class Keyword(Plugin):
 
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+        if "笑话" in content:
+            no = random.randint(0, 66028)
+            curdir = os.path.dirname(__file__)
+            f = "xiaohua.data"
+            data_path = os.path.join(curdir, f)
+            data = linecache.getline(data_path, no)
+            data = json.loads(data)
+            reply = Reply()
+            reply.type = ReplyType.TEXT
+            reply.content = data["content"]
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+
 
 
     def get_help_text(self, **kwargs):
