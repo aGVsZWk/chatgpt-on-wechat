@@ -23,6 +23,7 @@ plugins/**/
 !plugins/finish
 !plugins/godcmd
 !plugins/tool
+!plugins/cat
 !plugins/banwords
 !plugins/weather
 !plugins/xzw

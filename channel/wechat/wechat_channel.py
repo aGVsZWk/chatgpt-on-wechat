@@ -41,7 +41,6 @@ def handler_single_msg(msg):
 
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE, ATTACHMENT, SHARING], isGroupChat=True)
 def handler_group_msg(msg):
-    logger.debug(msg)
     try:
         cmsg = WechatMessage(msg, True)
     except NotImplementedError as e:
