@@ -12,7 +12,7 @@ config.json
 QR.png
 nohup.out
 tmp
-plugins.json
+# plugins.json
 itchat_y3i3.pkl
 *.log
 user_y3i3_datas.pkl
@@ -34,3 +34,4 @@ plugins/banwords/lib/__pycache__
 !plugins/role
 !plugins/keyword
 !plugins/linkai
+!girlPic

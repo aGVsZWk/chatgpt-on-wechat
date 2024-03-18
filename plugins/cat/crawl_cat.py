@@ -5,7 +5,7 @@
 # @Description :
 import cv2
 import numpy as np
-# from picamera2 import Picamera2, Preview
+from picamera2 import Picamera2, Preview
 import time
 from PIL import Image
 import json
@@ -15,7 +15,7 @@ import io
 import os
 # os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 from ultralytics import YOLO
-import redis
+# import redis
 import pickle
 import random
 import threading
@@ -25,17 +25,17 @@ import sys
 photo_file_name = "cat"
 
 
-host = "127.0.0.1"
-port = 6379
-db = 0
-password = "123456"
-queue_name = "wechat_msg_queue"
-connection = redis.Redis(host=host, port=port, db=db, password=password)
+# host = "127.0.0.1"
+# port = 6379
+# db = 0
+# password = "123456"
+# queue_name = "wechat_msg_queue"
+# connection = redis.Redis(host=host, port=port, db=db, password=password)
 # pool = redis.ConnectionPool()
 
 
-def send_payload(data):
-    return connection.lpush(queue_name, data)
+# def send_payload(data):
+#     return connection.lpush(queue_name, data)
 
 
 
@@ -115,7 +115,8 @@ class CameraCV2(CameraMixin):
 
 
 def cat_monitor():
-    camera = CameraCV2()
+    # camera = CameraCV2()
+    camera = CameraPicamera()
     i = 0
     try:
         while camera.is_open:
@@ -124,7 +125,7 @@ def cat_monitor():
             # 在帧上可视化结果
             for result in results:
                 annotated_frame = result.plot()
-                cv2.imshow("YOLOv8推理", annotated_frame)
+                # cv2.imshow("YOLOv8推理", annotated_frame)
                 items = json.loads(result.tojson())
                 for item in items:
                     # if item["name"] == "cat":
@@ -132,7 +133,8 @@ def cat_monitor():
                         i += 1
                         # print(i)
                         # 显示带注释的帧
-                        if i > 100:
+                        if i > 5:
+                            print(i)
                             # img = Image.fromarray(np.uint8(annotated_frame / imgs))
                             # name = str(uuid.uuid4())
                             # print(name)
@@ -157,7 +159,7 @@ def cat_notify(img):
         "content": img
     }
     data = pickle.dumps(payload)
-    send_payload(data)
+    # send_payload(data)
 
 
 def cat_receiver():
@@ -193,4 +195,5 @@ def main():
 
 if __name__ == '__main__':
     # cat_monitor()
+    print("run start")
     main()

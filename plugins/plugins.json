@@ -1,0 +1,60 @@
+{
+    "plugins": {
+        "Godcmd": {
+            "enabled": true,
+            "priority": 999
+        },
+        "timetask": {
+            "enabled": true,
+            "priority": 950
+        },
+        "Xzw": {
+            "enabled": true,
+            "priority": 900
+        },
+        "Weather": {
+            "enabled": true,
+            "priority": 900
+        },
+        "Keyword": {
+            "enabled": true,
+            "priority": 900
+        },
+        "Cat": {
+            "enabled": true,
+            "priority": 900
+        },
+        "Banwords": {
+            "enabled": false,
+            "priority": 100
+        },
+        "linkai": {
+            "enabled": true,
+            "priority": 99
+        },
+        "tool": {
+            "enabled": false,
+            "priority": 0
+        },
+        "Role": {
+            "enabled": true,
+            "priority": 0
+        },
+        "BDunit": {
+            "enabled": false,
+            "priority": 0
+        },
+        "summary": {
+            "enabled": true,
+            "priority": -1
+        },
+        "Hello": {
+            "enabled": true,
+            "priority": -1
+        },
+        "Finish": {
+            "enabled": true,
+            "priority": -999
+        }
+    }
+}
