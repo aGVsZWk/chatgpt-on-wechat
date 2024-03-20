@@ -32,6 +32,10 @@
             "enabled": true,
             "priority": 99
         },
+        "Apilot": {
+            "enabled": true,
+            "priority": 88
+        },
         "tool": {
             "enabled": false,
             "priority": 0

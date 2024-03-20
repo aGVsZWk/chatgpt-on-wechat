@@ -128,10 +128,11 @@ def cat_monitor():
                 # cv2.imshow("YOLOv8推理", annotated_frame)
                 items = json.loads(result.tojson())
                 for item in items:
+                    print(item["name"])
                     # if item["name"] == "cat":
                     if item["name"] == "cat":
                         i += 1
-                        # print(i)
+                        print(i)
                         # 显示带注释的帧
                         if i > 5:
                             print(i)

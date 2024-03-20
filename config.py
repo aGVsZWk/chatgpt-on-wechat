@@ -52,8 +52,8 @@ available_setting = {
     # chatgpt api参数 参考https://platform.openai.com/docs/api-reference/chat/create
     "temperature": 0.9,
     "top_p": 1,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
+    "frequency_penalty": 1.9,
+    "presence_penalty": 1.9,
     "request_timeout": 180,  # chatgpt请求超时时间，openai接口默认设置为600，对于难问题一般需要较长时间
     "timeout": 120,  # chatgpt重试超时时间，在这个时间内，将会自动重试
     # Baidu 文心一言参数

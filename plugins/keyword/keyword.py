@@ -173,6 +173,18 @@ class Keyword(Plugin):
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
+        if "美女" in content:
+            curdir = os.path.dirname(__file__)
+            f = "girlPic"
+            data_path = os.path.join(curdir, f)
+            files = [os.path.join(data_path, f) for f in os.listdir(data_path) if os.path.isfile(os.path.join(data_path, f))]
+            picc_path = random.choice(files)
+            logger.info(picc_path)
+            reply = Reply()
+            reply.type = ReplyType.IMAGE
+            reply.content = open(picc_path, "rb")
+            e_context["reply"] = reply
+            e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
 
     def get_help_text(self, **kwargs):
