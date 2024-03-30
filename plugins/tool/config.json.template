@@ -1,5 +1,6 @@
 {
   "tools": [
+    "google-search",
     "python",
     "url-get",
     "terminal",

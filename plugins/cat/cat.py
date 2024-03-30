@@ -10,6 +10,34 @@ from bridge.reply import Reply, ReplyType
 from plugins import *
 import threading
 import time
+from multiprocessing.connection import Listener
+import traceback
+
+authkey = 'peekaboo'
+server = Listener(('', 25000), authkey=authkey)
+client = server.accept()
+
+
+def recv_file_name():
+    while True:
+        try:
+            try:
+                while True:
+                    msg = client.recv()
+                    client.close()
+                    server.close()
+                    return msg
+            except EOFError:
+                logger.error("Connection closed")
+        except Exception as e:
+            logger.error(e)
+
+
+def send_start_command():
+    from multiprocessing.connection import Client
+    c = Client(('', 25001), authkey=authkey)
+    c.send('start')
+    c.close()
 
 
 @plugins.register(
@@ -79,6 +107,23 @@ class Cat(Plugin):
             reply.content = "抓猫程序已启动"
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+
+    def recv_and_send_pic(self, e_context: EventContext):
+        curdir = os.path.dirname(__file__)
+        f = recv_file_name()
+        cat_path = os.path.join(curdir, f)
+        while True:
+            if os.path.exists(cat_path):
+                reply = Reply()
+                reply.type = ReplyType.IMAGE
+                reply.content = open(cat_path, "rb")
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
+                channel = e_context["channel"]
+                self._send(channel, reply, e_context["context"])
+                time.sleep(5)
+                os.remove(cat_path)
+                break
 
     def get_help_text(self, **kwargs):
         help_text = "抓猫"

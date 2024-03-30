@@ -21,24 +21,12 @@ import random
 import threading
 import multiprocessing
 import sys
-
+from loguru import logger
 photo_file_name = "cat"
+from multiprocessing.connection import Client, Listener
 
 
-# host = "127.0.0.1"
-# port = 6379
-# db = 0
-# password = "123456"
-# queue_name = "wechat_msg_queue"
-# connection = redis.Redis(host=host, port=port, db=db, password=password)
-# pool = redis.ConnectionPool()
-
-
-# def send_payload(data):
-#     return connection.lpush(queue_name, data)
-
-
-
+authkey = 'peekaboo'
 
 
 model = YOLO(os.path.join(os.path.dirname(__file__), '../../y3i3/yolov8n.pt'))
@@ -117,6 +105,7 @@ class CameraCV2(CameraMixin):
 def cat_monitor():
     # camera = CameraCV2()
     camera = CameraPicamera()
+    c = Client(('localhost', 25000), authkey=authkey)
     i = 0
     try:
         while camera.is_open:
@@ -140,10 +129,11 @@ def cat_monitor():
                             # name = str(uuid.uuid4())
                             # print(name)
                             img = Image.fromarray(np.uint8(annotated_frame[:, :, ::-1]))
-                            img.save(photo_file_name + ".jpg")
+                            file_name = photo_file_name + ".jpg"
+                            img.save(file_name)
                             camera.stop()
-                            return
-                            cat_notify(img)
+                            time.sleep(0.5)
+                            c.send(file_name)
                             i = 0
 
                             # time.sleep(1)
@@ -153,45 +143,31 @@ def cat_monitor():
         camera.stop()
 
 
-def cat_notify(img):
-    payload = {
-        "remark_name": "臭茹茹",
-        "msg_type": "image",
-        "content": img
-    }
-    data = pickle.dumps(payload)
-    # send_payload(data)
-
-
-def cat_receiver():
-    data = connection.brpop(queue_name)
-    print(type(data), len(data))
-    payload = pickle.loads(data[1])
-    print(payload)
-    cat_send(payload["content"])
-
-
-def cat_send(img):
-    # user = y3i3_helper.get_friend(remark_name="臭茹茹")
-    image_storage = io.BytesIO()
-    # img.save(image_storage, mode="TIFF")
-    img_bytes = image_storage.getvalue()
-    print(img_bytes)
-    # itchat.send_image(img_bytes, toUserName=user.UserName)
-
-# def main():
-#     t1 = multiprocessing.Process(target=cat_monitor)
-#     # cat_monitor()
-#     t2 = multiprocessing.Process(target=cat_receiver)
-#     t1.start()
-#     t2.start()
-#     print("aaa")
-#     # t1.join()
-#     t2.join()
+# def cat_receiver():
+#     data = connection.brpop(queue_name)
+#     logger.debug(type(data), len(data))
+#     payload = pickle.loads(data[1])
+#     logger.debug(payload)
+#     cat_send(payload["content"])
+#
+#
+# def cat_send(img):
+#     # user = y3i3_helper.get_friend(remark_name="臭茹茹")
+#     image_storage = io.BytesIO()
+#     # img.save(image_storage, mode="TIFF")
+#     img_bytes = image_storage.getvalue()
+#     logger.debug(img_bytes)
+#     # itchat.send_image(img_bytes, toUserName=user.UserName)
 
 
 def main():
-    cat_monitor()
+    authkey = 'peekaboo'
+    server = Listener(('', 25001), authkey=authkey)
+    client = server.accept()
+    while True:
+        t = client.recv()
+        if t == "start":
+            cat_monitor()
 
 
 if __name__ == '__main__':
