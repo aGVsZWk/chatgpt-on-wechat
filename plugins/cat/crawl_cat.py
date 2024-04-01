@@ -22,11 +22,10 @@ import threading
 import multiprocessing
 import sys
 from loguru import logger
-photo_file_name = "cat"
 from multiprocessing.connection import Client, Listener
 
 
-authkey = 'peekaboo'
+authkey = b'peekaboo'
 
 
 model = YOLO(os.path.join(os.path.dirname(__file__), '../../y3i3/yolov8n.pt'))
@@ -128,12 +127,15 @@ def cat_monitor():
                             # img = Image.fromarray(np.uint8(annotated_frame / imgs))
                             # name = str(uuid.uuid4())
                             # print(name)
-                            img = Image.fromarray(np.uint8(annotated_frame[:, :, ::-1]))
+                            # img = Image.fromarray(np.uint8(annotated_frame[:, :, ::-1]))
+                            img = Image.fromarray(np.uint8(annotated_frame[:, :, :]))
+                            photo_file_name = "cat"
                             file_name = photo_file_name + ".jpg"
                             img.save(file_name)
                             camera.stop()
                             time.sleep(0.5)
                             c.send(file_name)
+                            logger.debug("send {} pic success", file_name)
                             i = 0
 
                             # time.sleep(1)
@@ -153,7 +155,7 @@ def cat_monitor():
 #
 # def cat_send(img):
 #     # user = y3i3_helper.get_friend(remark_name="臭茹茹")
-#     image_storage = io.BytesIO()
+#     image_storage = io.BytesIO(
 #     # img.save(image_storage, mode="TIFF")
 #     img_bytes = image_storage.getvalue()
 #     logger.debug(img_bytes)
@@ -161,11 +163,11 @@ def cat_monitor():
 
 
 def main():
-    authkey = 'peekaboo'
     server = Listener(('', 25001), authkey=authkey)
-    client = server.accept()
     while True:
+        client = server.accept()
         t = client.recv()
+        logger.debug(t)
         if t == "start":
             cat_monitor()
 

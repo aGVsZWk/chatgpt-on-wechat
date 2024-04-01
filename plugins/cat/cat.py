@@ -13,12 +13,12 @@ import time
 from multiprocessing.connection import Listener
 import traceback
 
-authkey = 'peekaboo'
-server = Listener(('', 25000), authkey=authkey)
-client = server.accept()
+authkey = b'peekaboo'
 
 
 def recv_file_name():
+    server = Listener(('', 25000), authkey=authkey)
+    client = server.accept()
     while True:
         try:
             try:
@@ -90,7 +90,8 @@ class Cat(Plugin):
                 channel.send(reply, context, retry_cnt + 1)
 
     def check_task(self, e_context):
-        threading.Thread(target=self.check_task_sync, args=(e_context,)).start()
+        threading.Thread(target=self.recv_and_send_pic, args=(e_context,)).start()
+
 
     def on_handle_context(self, e_context: EventContext):
         if e_context["context"].type != ContextType.TEXT:
@@ -100,8 +101,9 @@ class Cat(Plugin):
         logger.debug("[cat] on_handle_context. content: %s" % content)
 
         if "抓猫" in content:
-            os.system("cd plugins/cat/ && /usr/bin/python crawl_cat.py")
+            # os.system("cd plugins/cat/ && /usr/bin/python crawl_cat.py")
             self.check_task(e_context)
+            send_start_command()
             reply = Reply()
             reply.type = ReplyType.TEXT
             reply.content = "抓猫程序已启动"
