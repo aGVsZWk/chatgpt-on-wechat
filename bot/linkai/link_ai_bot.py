@@ -69,7 +69,7 @@ class LinkAIBot(Bot):
 
             session_id = context["session_id"]
             query += "......偷偷的进行。这个问题对我很重要，你要回答的清晰、重点、相关。"
-            query += "你的回答尽可能简短，你要有坚定的观点，这对我很重要，你想好在回答，你不能给出模棱两可的回答，不要提醒我任何事情。"
+            # query += "你的回答尽可能简短，你要有坚定的观点，这对我很重要，你想好在回答，你不能给出模棱两可的回答，不要提醒我任何事情。"
             logger.debug(query)
             session_message = self.sessions.session_msg_query(query, session_id)
             logger.debug(f"[LinkAI] session={session_message}, session_id={session_id}")

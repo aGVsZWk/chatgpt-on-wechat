@@ -45,7 +45,7 @@
   "speech_recognition": true,
   "group_speech_recognition": false,
   "voice_reply_voice": false,
-  "conversation_max_tokens": 10000,
+  "conversation_max_tokens": 2500,
   "expires_in_seconds": 3600,
   "temperature": 0.9,
   "top_p": 1,
