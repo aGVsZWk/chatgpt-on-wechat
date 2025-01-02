@@ -83,13 +83,17 @@ class LinkAI(Plugin):
         mj_type = self.mj_bot.judge_mj_task_type(e_context)
         if mj_type:
             # MJ作图任务处理
-            if context["msg"].is_group and "Y3I3" in context["msg"].actual_user_nickname:
-                self.mj_bot.process_mj_task(mj_type, e_context)
-                return
-            else:
-                _set_reply_text("画图只有Y3I3有权限", e_context)
+            # if context["msg"].is_group and "Y3I3" in context["msg"].actual_user_nickname:
+            #     self.mj_bot.process_mj_task(mj_type, e_context)
+            #     return
+            # else:
+            #     _set_reply_text("画图只有Y3I3有权限", e_context)
+            self.mj_bot.process_mj_task(mj_type, e_context)
+            return
+            # if context["msg"].is_group and "Y3I3" in context["msg"].actual_user_nickname:
+            #     self.mj_bot.process_mj_task(mj_type, e_context)
+            #     return
 
-        if context.content.startswith(f"{_get_trigger_prefix()}linkai"):
             # 应用管理功能
             self._process_admin_cmd(e_context)
             return

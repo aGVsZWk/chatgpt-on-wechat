@@ -1,6 +1,6 @@
 {
   "channel_type": "wx",
-  "model": "",
+  "model": "qwen-turbo",
   "open_ai_api_key": "",
   "text_to_image": "midjourney",
   "voice_to_text": "linkai",
@@ -9,12 +9,16 @@
   "hot_reload": true,
   "single_chat_prefix": [
     "bot",
+    "Y3I3",
+    "@Y3I3",
     "@bot",
     "@你愿意做我的小可爱嘛",
     "亲,",
     "亲，",
     "亲",
     "小可爱",
+    "何磊",
+    "机器人",
     "你愿意做我的小可爱嘛",
     "你愿意做我的小可爱嘛 ",
     "你愿意做我的小可爱嘛\\u2005"
@@ -23,6 +27,7 @@
   "group_chat_prefix": [
     "@你愿意做我的小可爱嘛",
     "@你愿意做我的小可爱嘛 ",
+    "@Y3I3",
     "@你愿意做我的小可爱嘛\\u2005"
   ],
   "group_name_white_list": [
@@ -33,7 +38,12 @@
     "中国好邻居",
     "兵营",
     "空指部",
-    "ALL_GROUP"
+    "北京摸鱼脱单2群",
+    "绿城•凤鸣朝阳邻里群",
+    "北京搭子群",
+    "北京唠嗑群",
+    "小苏交友",
+    "漂子在京·工作~聊天群"
   ],
   "group_chat_in_one_session": [
     "ALL_GROUP"

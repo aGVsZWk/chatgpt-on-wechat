@@ -287,7 +287,7 @@ def send_morning_msg():
     """
     f = random.choice([get_caihongpi_info, get_hitokoto_info, get_yiyan_word])
     text = get_weather("北京") + "\n\n" + f() + "\n" + get_sweet_words()
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    user = y3i3_helper.get_friend(remark_name="解亚茹")
     itchat.send(text, toUserName=user.UserName)
 
     text = get_weather("石家庄", "小伙砸")
@@ -300,7 +300,7 @@ def send_constellation_today():
     发送今日星座信息
     """
     text = get_constellation_info("白羊座")
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    user = y3i3_helper.get_friend(remark_name="解亚茹")
     itchat.send(text, toUserName=user.UserName)
 
     text = get_constellation_info("双鱼座")
@@ -313,12 +313,12 @@ def send_constellation_tomorrow():
     发送明日星座信息
     """
     text = get_constellation_info("白羊座", True)
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    user = y3i3_helper.get_friend(remark_name="解亚茹")
     itchat.send(text, toUserName=user.UserName)
 
 
 def send_excuse_msg():
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    user = y3i3_helper.get_friend(remark_name="解亚茹")
     t = int(random.random() * 100)
     if t < 20:
         text = "臭茹茹，你今天拉屎了没"
@@ -332,10 +332,11 @@ def send_excuse_msg():
         text = get_hitokoto_info(c="j")
     else:
         text = ""
+    text = "臭茹茹，你今天穿秋裤了没"
     itchat.send(text, toUserName=user.UserName)
 
 def send_eat_msg():
-    user = y3i3_helper.get_friend(remark_name="臭茹茹")
+    user = y3i3_helper.get_friend(remark_name="解亚茹")
     itchat.send("臭茹茹，你晚饭吃的啥?", toUserName=user.UserName)
 
 
@@ -350,17 +351,18 @@ def init_scheduler():
     #                   jitter=random.randint(100, 900))
     # scheduler.add_job(send_excuse_msg, "cron", [], hour=10, minute=random.randint(0, 59), misfire_grace_time=600,
     #                   jitter=random.randint(100, 900))
-    # scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=random.randint(0, 59), misfire_grace_time=600,
-    #                   jitter=random.randint(100, 900))
-    # scheduler.add_job(send_excuse_msg, "cron", [], hour=14, minute=random.randint(0, 59), misfire_grace_time=600,
-    #                   jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=random.randint(30, 35), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=11, minute=47)
+    scheduler.add_job(send_excuse_msg, "cron", [], hour=12, minute=random.randint(0, 59), misfire_grace_time=600,
+                      jitter=random.randint(100, 900))
     # scheduler.add_job(send_excuse_msg, "cron", [], hour=16, minute=random.randint(0, 59), misfire_grace_time=600,
     #                   jitter=random.randint(100, 900))
     # scheduler.add_job(send_excuse_msg, "cron", [], hour=17, minute=random.randint(0, 59), misfire_grace_time=600,
     #                   jitter=random.randint(100, 900))
     # scheduler.add_job(send_eat_msg, "cron", [], hour=21, minute=24, misfire_grace_time=600,
     #                   jitter=random.randint(10, 30))
-    scheduler.start()
+    # scheduler.start()
 
 
 if __name__ == '__main__':
