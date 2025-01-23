@@ -1,5 +1,11 @@
 {
-  "channel_type": "wx",
+  "channel_type": "gewechat",
+  "gewechat_app_id": "wx_NOnFC5oBGDvcsMOz209fx",
+  "gewechat_token": "e963c13f71eb40f5999229245d130eeb",
+  "gewechat_base_url": "http://192.168.0.125:2531/v2/api",
+  "gewechat_callback_url": "http://192.168.0.125:9919/v2/api/callback/collect",
+  "gewechat_download_url": "http://192.168.0.125:2532/download",
+  "debug": true,
   "model": "qwen-turbo",
   "open_ai_api_key": "",
   "text_to_image": "midjourney",
@@ -28,22 +34,12 @@
     "@你愿意做我的小可爱嘛",
     "@你愿意做我的小可爱嘛 ",
     "@Y3I3",
+    "@Y3I3-ZORG",
+    "@ZORG",
     "@你愿意做我的小可爱嘛\\u2005"
   ],
   "group_name_white_list": [
-    "小可爱sweet",
-    "七剑下天山",
-    "买房吗？",
-    "买房吗?",
-    "中国好邻居",
-    "兵营",
-    "空指部",
-    "北京摸鱼脱单2群",
-    "绿城•凤鸣朝阳邻里群",
-    "北京搭子群",
-    "北京唠嗑群",
-    "小苏交友",
-    "漂子在京·工作~聊天群"
+    "ALL_GROUP"
   ],
   "group_chat_in_one_session": [
     "ALL_GROUP"

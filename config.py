@@ -1,5 +1,5 @@
 # encoding:utf-8
-
+import copy
 import json
 import logging
 import os
@@ -10,6 +10,12 @@ from common.log import logger
 # 将所有可用的配置项写在字典里, 请使用小写字母
 # 此处的配置值无实际意义，程序不会读取此处的配置，仅用于提示格式，请将配置加入到config.json中
 available_setting = {
+    # webui配置
+    "web_ui_port": 7860,
+    "web_ui_username": "dow",
+    "web_ui_password": "dify-on-wechat",
+    # 错误回复消息
+    "error_reply": "我暂时遇到了一些问题，请您稍后重试~",
     # openai api配置
     "open_ai_api_key": "",  # openai api key
     # openai apibase，当use_azure_chatgpt为true时，需要设置对应的api base
@@ -40,7 +46,8 @@ available_setting = {
     "image_create_prefix": ["画", "看", "找"],  # 开启图片回复的前缀
     "concurrency_in_session": 1,  # 同一会话最多有多少条消息在处理中，大于1可能乱序
     "image_create_size": "1024x1024",  # 图片大小,可选有 256x256, 512x512, 1024x1024 (dall-e-3默认为1024x1024)
-    "group_chat_exit_group": False, 
+    "group_chat_exit_group": False,
+    "accept_friend_commands": ["加好友"],  # 自动接受好友请求的申请信息
     # chatgpt会话参数
     "expires_in_seconds": 3600,  # 无操作会话的过期时间
     # 人格描述
@@ -157,6 +164,17 @@ Please bear in mind that all subsequent communications should be crafted in the 
     "feishu_token": "",  # 飞书 verification token
     "feishu_bot_name": "",  # 飞书机器人的名字
 
+    # 钉钉配置
+    "dingtalk_client_id": "",  # 钉钉机器人Client ID
+    "dingtalk_client_secret": "",  # 钉钉机器人Client Secret
+    "dingtalk_card_enabled": False,
+    ## gewechat配置
+    "gewechat_base_url": "",
+    "gewechat_download_url": "",
+    "gewechat_token": "",
+    "gewechat_app_id": "",
+    "gewechat_callback_url": "",  # 回调地址，示例：http://172.17.0.1:9919/v2/api/callback/collect
+
     # chatgpt指令自定义触发词
     "clear_memory_commands": ["#清除记忆"],  # 重置会话指令，必须以#开头
     # channel配置
@@ -204,6 +222,12 @@ class Config(dict):
         except Exception as e:
             raise e
 
+    def set(self, key, value):
+        try:
+            self[key] = value
+        except Exception as e:
+            raise e
+
     # Make sure to return a dictionary to ensure atomic
     def get_user_data(self, user) -> dict:
         if self.user_datas.get(user) is None:
@@ -231,6 +255,30 @@ class Config(dict):
 
 
 config = Config()
+
+
+def drag_sensitive(config):
+    try:
+        if isinstance(config, str):
+            conf_dict: dict = json.loads(config)
+            conf_dict_copy = copy.deepcopy(conf_dict)
+            for key in conf_dict_copy:
+                if "key" in key or "secret" in key:
+                    if isinstance(conf_dict_copy[key], str):
+                        conf_dict_copy[key] = conf_dict_copy[key][0:3] + "*" * 5 + conf_dict_copy[key][-3:]
+            return json.dumps(conf_dict_copy, indent=4)
+
+        elif isinstance(config, dict):
+            config_copy = copy.deepcopy(config)
+            for key in config:
+                if "key" in key or "secret" in key:
+                    if isinstance(config_copy[key], str):
+                        config_copy[key] = config_copy[key][0:3] + "*" * 5 + config_copy[key][-3:]
+            return config_copy
+    except Exception as e:
+        logger.exception(e)
+        return config
+    return config
 
 
 def load_config():
@@ -269,6 +317,20 @@ def load_config():
     logger.info("[INIT] load config: {}".format(config))
 
     config.load_user_datas()
+
+
+def save_config():
+    global config
+    config_path = "./config.json"
+    try:
+        config_dict = dict(config)  # 将Config对象转换为普通字典
+        # 创建一个按键排序的有序字典
+        sorted_config = {key: config_dict[key] for key in sorted(config_dict.keys())}
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump(sorted_config, f, indent=4, ensure_ascii=False)
+            logger.info("[Config] Configuration saved.")
+    except Exception as e:
+        logger.error(f"[Config] Save configuration error: {e}")
 
 
 def get_root():
