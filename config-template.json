@@ -1,10 +1,10 @@
 {
   "channel_type": "gewechat",
-  "gewechat_app_id": "wx_NOnFC5oBGDvcsMOz209fx",
-  "gewechat_token": "e963c13f71eb40f5999229245d130eeb",
-  "gewechat_base_url": "http://192.168.0.125:2531/v2/api",
-  "gewechat_callback_url": "http://192.168.0.125:9919/v2/api/callback/collect",
-  "gewechat_download_url": "http://192.168.0.125:2532/download",
+  "gewechat_app_id": "",
+  "gewechat_token": "",
+  "gewechat_base_url": "http://192.168.1.7:2531/v2/api",
+  "gewechat_callback_url": "http://192.168.1.7:9919/v2/api/callback/collect",
+  "gewechat_download_url": "http://192.168.1.7:2532/download",
   "debug": true,
   "model": "qwen-turbo",
   "open_ai_api_key": "",
@@ -38,6 +38,7 @@
     "@ZORG",
     "@你愿意做我的小可爱嘛\\u2005"
   ],
+  "group_chat_keyword": ["Y3I3", "小可爱"],
   "group_name_white_list": [
     "ALL_GROUP"
   ],

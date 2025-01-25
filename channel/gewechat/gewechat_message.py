@@ -540,7 +540,8 @@ class GeWeChatMessage(ChatMessage):
             if not xml_parsed:
                 self.is_at = '在群聊中@了你' in self.msg.get('Data', {}).get('PushContent', '')
                 logger.debug(f"[gewechat] Parse is_at from PushContent. self.is_at: {self.is_at}")
-
+            logger.info(self.actual_user_id)
+            logger.info(self.content)
             # 如果是群消息，使用正则表达式去掉wxid前缀和@信息
             self.content = re.sub(f'{self.actual_user_id}:\n', '', self.content)  # 去掉wxid前缀
             self.content = re.sub(r'@[^\u2005]+\u2005', '', self.content)  # 去掉@信息
